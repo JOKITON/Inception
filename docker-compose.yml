@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  nginx:
+    build:
+      context: ./services/nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    networks:
+      - my-network
+
+  wordpress:
+    build:
+      context: ./services/wordpress
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - my-network
+    volumes:
+      - wordpress_data:/var/www/html
+      - db_data:/var/lib/mysql
+
+  mariadb:
+    build:
+      context: ./services/mariadb
+      dockerfile: Dockerfile
+    restart: always # Your containers have to restart in case of a crash
+    networks:
+      - my-network # Enable communication between containers
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
+  wordpress_data:
+
+networks:
+  my-network:
+
+

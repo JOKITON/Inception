@@ -1,0 +1,4 @@
+volumes/
+nginx.crt
+nginx.key
+.env
