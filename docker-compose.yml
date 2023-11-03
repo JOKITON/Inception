@@ -2,6 +2,7 @@ version: '3'
 
 services:
   nginx:
+    image: nginx
     build:
       context: ./services/nginx
       dockerfile: Dockerfile
@@ -22,6 +23,8 @@ services:
     volumes:
       - wordpress_data:/var/www/html
       - db_data:/var/lib/mysql
+    ports:
+      - "9000:9000"
 
   mariadb:
     build:
