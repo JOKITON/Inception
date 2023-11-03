@@ -14,6 +14,7 @@ services:
       - my-network
 
   wordpress:
+    image: wordpress
     build:
       context: ./services/wordpress
       dockerfile: Dockerfile
@@ -27,6 +28,7 @@ services:
       - "9000:9000"
 
   mariadb:
+    image: mariadb
     build:
       context: ./services/mariadb
       dockerfile: Dockerfile

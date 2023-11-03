@@ -3,6 +3,8 @@ FROM alpine:3.18.3
 
 # Install PHP-FPM and additional dependencies
 RUN apk update && \
+    apk upgrade && \
+    apk fix && \
     apk add --no-cache php-fpm && \
     rm -rf /var/cache/apk/*
 
@@ -21,5 +23,5 @@ RUN mkdir -p /var/www/localhost/htdocs/wordpress && \
 COPY wp-config.php /usr/share/webapps/wordpress/
 
 # CMD intruction to start PHP-FPM
-CMD ["php-fpm"]
+CMD ["php-fpm81"]
 

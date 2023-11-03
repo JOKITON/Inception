@@ -1,16 +1,23 @@
 # NGINX Dockerfile
-FROM debian:stable
+FROM alpine:3.18.3
 
 # Set the environment variable to non-interactive mode for apt
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install NGINX and required packages
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends nginx && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm -f /etc/nginx/sites-available/default && \
-    rm -f /etc/nginx/sites-enabled/default
+# Install NGINX and required packages on Alpine
+RUN apk update && \
+    apk upgrade && \
+    apk fix && \
+    apk add nginx
+    
+
+# Install NGINX and required packages on Debian
+# RUN apt-get update && \
+#    apt-get install -y --no-install-recommends nginx && \
+#    apt-get clean && \
+#    rm -rf /var/lib/apt/lists/* && \
+#    rm -f /etc/nginx/sites-available/default && \
+#    rm -f /etc/nginx/sites-enabled/default
 
 # Copy your SSL/TLS certificate and key into the container
 COPY nginx.crt /etc/nginx/nginx.crt

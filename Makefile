@@ -14,7 +14,7 @@ down:
 
 # View container logs
 logs:
-	$(COMPOSE) -f $(COMPOSE_FILE) logs -f
+	sudo $(COMPOSE) -f $(COMPOSE_FILE) logs -f
 
 # Build Docker images for services (for ex. NGINX)
 build-nginx:
