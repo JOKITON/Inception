@@ -2,15 +2,15 @@ version: '3'
 
 services:
   nginx:
-    image: nginx
+    image: nginx # Name for the image
     build:
-      context: ./services/nginx
+      context: ./services/nginx # Dir for Dockerfile
       dockerfile: Dockerfile
-    ports:
+    ports: # Ports enabled for communication : 80, 443
       - "80:80"
       - "443:443"
-    restart: always
-    networks:
+    restart: always # Your containers have to restart in case of a crash
+    networks: # Enable communication between containers
       - my-network
 
   wordpress:
@@ -26,23 +26,30 @@ services:
       - db_data:/var/lib/mysql
     ports:
       - "9000:9000"
+    depends_on: # Dependecy set to create database before.
+      - mariadb
 
   mariadb:
     image: mariadb
     build:
       context: ./services/mariadb
       dockerfile: Dockerfile
-    restart: always # Your containers have to restart in case of a crash
+    restart: always
     networks:
-      - my-network # Enable communication between containers
+      - my-network
     volumes:
       - db_data:/var/lib/mysql
 
-volumes:
+volumes: # Dedicated to configure the volumes
   db_data:
+    driver: local
+    external: false
+    name: mariadb-volume
   wordpress_data:
+    driver: local
+    external: false
+    name: wordpress-volume
 
 networks:
   my-network:
-
-
+    driver: bridge # Default network. Creates a virtual network in the host, connecting containers through a virtual "bridge".

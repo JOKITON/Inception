@@ -5,20 +5,22 @@ COMPOSE_FILE = docker-compose.yml
 all: up
 
 # Build and start containers
-up :
+up : $(COMPOSE_FILE)
 	sudo $(COMPOSE) -f $(COMPOSE_FILE) up -d
+	echo "Available rules inside Makefile:\n\t1 : up\n\t2 : down\n\t3 : ps"
 
 #Stop and remove containers (does not remove images)
-down:
+down : $(COMPOSE_FILE)
 	sudo $(COMPOSE) -f $(COMPOSE_FILE) down
 
+ps : $(COMPOSE_FILE)
+	sudo $(COMPOSE) -f $(COMPOSE_FILE) ps
+
 # View container logs
-logs:
+logs : $(COMPOSE_FILE)
 	sudo $(COMPOSE) -f $(COMPOSE_FILE) logs -f
 
 # Build Docker images for services (for ex. NGINX)
-build-nginx:
+build-nginx : $(COMPOSE_FILE)
 	sudo $(COMPOSE) -f $(COMPOSE_FILE) build nginx
 
-# to-do:
-# 1. Add Wordpress & MariaDB build rules
