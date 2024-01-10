@@ -19,9 +19,14 @@ RUN mkdir -p /usr/share/webapps/ && \
 RUN mkdir -p /var/www/localhost/htdocs/wordpress && \
 	ln -s /usr/share/webapps/wordpress/ /var/www/localhost/htdocs/wordpress
 
+# Expose port to communicate with Nginx
+EXPOSE 9000
+# Expose port to communicate with MariaDB
+EXPOSE 3306
+
 # Create and copy wp-config.php
 COPY wp-config.php /usr/share/webapps/wordpress/
 
 # CMD intruction to start PHP-FPM
-CMD ["php-fpm81"]
+CMD ["php-fpm81", "--nodaemonize"]
 

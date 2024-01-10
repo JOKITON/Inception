@@ -1,54 +1,54 @@
 version: '3'
+name: inception
 
 services:
   nginx:
-    image: nginx # Name for the image
+    image: inception-nginx # Name for the image
     build:
-      context: ./services/nginx # Dir for Dockerfile
+      context: ./services/nginx/ # Dir for Dockerfile
       dockerfile: Dockerfile
     ports: # Ports enabled for communication : 80, 443
-      - "80:80"
       - "443:443"
     restart: always # Your containers have to restart in case of a crash
     networks: # Enable communication between containers
       - my-network
 
-  wordpress:
-    image: wordpress
-    build:
-      context: ./services/wordpress
-      dockerfile: Dockerfile
-    restart: always
-    networks:
-      - my-network
-    volumes:
-      - wordpress_data:/var/www/html
-      - db_data:/var/lib/mysql
-    ports:
-      - "9000:9000"
-    depends_on: # Dependecy set to create database before.
-      - mariadb
+#  wordpress:
+#    image: wordpress
+#    build:
+#      context: ./services/wordpress
+#      dockerfile: Dockerfile
+#    restart: always
+#    networks:
+#      - my-network
+#    volumes:
+#      - wordpress_data:/var/www/html
+#      - db_data:/var/lib/mysql
+#    ports:
+#      - "9000:9000"
+#    depends_on: # Dependecy set to create database before.
+#     - mariadb
 
-  mariadb:
-    image: mariadb
-    build:
-      context: ./services/mariadb
-      dockerfile: Dockerfile
-    restart: always
-    networks:
-      - my-network
-    volumes:
-      - db_data:/var/lib/mysql
+#  mariadb:
+#    image: mariadb
+#    build:
+#      context: ./services/mariadb
+#      dockerfile: Dockerfile
+#    restart: always
+#    networks:
+#      - my-network
+#    volumes:
+#      - db_data:/var/lib/mysql
 
-volumes: # Dedicated to configure the volumes
-  db_data:
-    driver: local
-    external: false
-    name: mariadb-volume
-  wordpress_data:
-    driver: local
-    external: false
-    name: wordpress-volume
+#volumes: # Dedicated to configure the volumes
+#  db_data:
+#    driver: local
+#    external: false
+#    name: mariadb-volume
+#  wordpress_data:
+#    driver: local
+#    external: false
+#    name: wordpress-volume
 
 networks:
   my-network:

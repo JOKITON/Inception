@@ -21,7 +21,7 @@ RUN mkdir /etc/nginx/conf.d \
 COPY nginx.crt /etc/nginx/nginx.crt
 COPY nginx.key /etc/nginx/nginx.key
 COPY my_own_config.conf /etc/nginx/nginx.conf
-COPY index.html /usr/share/nginx/html/
+COPY portfolio /usr/share/nginx/html/
 COPY snippets/fastcgi-php.conf /etc/nginx/snippets/
 
 #! Update NGINX configuration to enable SSL/TLS
@@ -30,7 +30,7 @@ COPY snippets/fastcgi-php.conf /etc/nginx/snippets/
 
 #! Expose ports for HTTP (80) and HTTPS (443)
 # HTPP
-EXPOSE 80
+#EXPOSE 80
 # HTTPS
 EXPOSE 443
 

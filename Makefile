@@ -2,6 +2,8 @@ COMPOSE = docker-compose
 
 COMPOSE_FILE = docker-compose.yml
 
+RM = rm
+
 all: up
 
 # Build and start containers
@@ -12,6 +14,7 @@ up : $(COMPOSE_FILE)
 #Stop and remove containers (does not remove images)
 down : $(COMPOSE_FILE)
 	sudo $(COMPOSE) -f $(COMPOSE_FILE) down
+	sudo docker $(RM) inception-nginx
 
 ps : $(COMPOSE_FILE)
 	sudo $(COMPOSE) -f $(COMPOSE_FILE) ps
