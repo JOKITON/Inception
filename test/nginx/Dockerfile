@@ -31,7 +31,6 @@ COPY snippets/fastcgi-php.conf /etc/nginx/snippets/
 # EXPOSE 80
 # HTTPS
 EXPOSE 443
-EXPOSE 9000
 # WORDPRESS
 # The same as doing: [ sudo ufw allow 9000/tcp ]
 
