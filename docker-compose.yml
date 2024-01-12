@@ -3,13 +3,12 @@ name: inception
 
 services:
   nginx:
-    image: inception-nginx # Name for the image
+    image: nginx # Name for the image
     build:
       context: ./services/nginx/ # Dir for Dockerfile
       dockerfile: Dockerfile
     ports: # Ports enabled for communication : 80, 443
       - "443:443"
-      - "9000:9000"
     restart: always # Your containers have to restart in case of a crash
     networks: # Enable communication between containers
       - my-network
@@ -24,11 +23,8 @@ services:
       - my-network
     volumes:
       - wordpress_data:/var/www/html
-      - db_data:/var/lib/mysql
-    ports:
-      - "8080:9000"  # Use a different host port, for example, 8080
-    depends_on: # Dependecy set to create database before.
-      - mariadb
+    #depends_on: # Dependecy set to create database before.
+   #   - mariadb
 
 #  mariadb:
 #    image: mariadb
@@ -41,15 +37,12 @@ services:
 #    volumes:
 #      - db_data:/var/lib/mysql
 
-#volumes: # Dedicated to configure the volumes
+volumes: # Dedicated to configure the volumes
+  wordpress_data:
 #  db_data:
 #    driver: local
 #    external: false
 #    name: mariadb-volume
-#  wordpress_data:
-#    driver: local
-#    external: false
-#    name: wordpress-volume
 
 networks:
   my-network:

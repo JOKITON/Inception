@@ -19,14 +19,10 @@ RUN mkdir -p /var/www/localhost/htdocs/wordpress && \
 	ln -s /usr/share/webapps/wordpress/ /var/www/localhost/htdocs/wordpress && \
 	mkdir /usr/share/webapps/wordpress/portfolio
 
-# Expose port to communicate with Nginx
-EXPOSE 9000
-# Expose port to communicate with MariaDB
-#EXPOSE 3306
-
 # Create and copy wp-config.php
 COPY wp-config.php /usr/share/webapps/wordpress/
 COPY portfolio /usr/share/webapps/wordpress/portfolio
+COPY www.conf /etc/php82/php-fpm.d/
 
 # CMD intruction to start PHP-FPM
 CMD ["php-fpm82", "--nodaemonize"]

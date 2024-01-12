@@ -1,10 +1,6 @@
 #! NGINX Dockerfile
 FROM alpine:3.19
 
-#! Set the environment variable to non-interactive mode for apt
-# (Used to skip questions that may appear when installing packages)
-ENV DEBIAN_FRONTEND=noninteractive
-
 #! Install NGINX and required packages on Alpine
 # Cache is cleaned to make container smaller
 RUN apk update && \
@@ -24,22 +20,13 @@ COPY snippets/fastcgi-php.conf /etc/nginx/snippets/
 
 #! Update NGINX configuration to enable SSL/TLS
 # include my own configuration inside the default configuration file
-#RUN sed -i '    /http {/r /etc/nginx/conf.d/my_own_config.conf' /etc/nginx/nginx.conf
+RUN sed -i '    /http {/r /etc/nginx/conf.d/my_own_config.conf' /etc/nginx/nginx.conf
 
-#! Expose ports for HTTP (80) and HTTPS (443)
+#! They are just informative, they do NOT publish any ports
 # HTPP
 # EXPOSE 80
 # HTTPS
 EXPOSE 443
-EXPOSE 9000
-# WORDPRESS
-# The same as doing: [ sudo ufw allow 9000/tcp ]
-
-# EXAMPLE PORTS:
-# FTP : 20-21
-# SMTP : 25
-# DNS : 53
-# ...
 
 #! Run daemon in the background
 # nginx : start the Nginx web server
