@@ -5,7 +5,8 @@ FROM alpine:3.19
 RUN apk update && \
     apk upgrade && \
     apk fix && \
-    apk add --no-cache php-fpm
+	apk add --no-cache php-fpm && \
+	apk add --no-cache php82-mysqli
 
 # Create directories & Install WordPress
 RUN mkdir -p /usr/share/webapps/ && \

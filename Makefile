@@ -14,7 +14,7 @@ up : $(COMPOSE_FILE)
 #Stop and remove containers (does not remove images)
 down : $(COMPOSE_FILE)
 	sudo $(COMPOSE) -f $(COMPOSE_FILE) down
-	sudo docker $(RM) inception-nginx
+	sudo docker image $(RM) nginx wordpress mariadb
 
 ps : $(COMPOSE_FILE)
 	sudo $(COMPOSE) -f $(COMPOSE_FILE) ps

@@ -23,26 +23,26 @@ services:
       - my-network
     volumes:
       - wordpress_data:/var/www/html
-    #depends_on: # Dependecy set to create database before.
-   #   - mariadb
+    depends_on: # Dependecy set to create database before.
+      - mariadb
 
-#  mariadb:
-#    image: mariadb
-#    build:
-#      context: ./services/mariadb
-#      dockerfile: Dockerfile
-#    restart: always
-#    networks:
-#      - my-network
-#    volumes:
-#      - db_data:/var/lib/mysql
+  mariadb:
+    image: mariadb
+    build:
+      context: ./services/mariadb
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - my-network
+    volumes:
+      - db_data:/var/lib/mysql
 
 volumes: # Dedicated to configure the volumes
   wordpress_data:
-#  db_data:
-#    driver: local
-#    external: false
-#    name: mariadb-volume
+  db_data:
+    driver: local
+    external: false
+    name: mariadb-volume
 
 networks:
   my-network:

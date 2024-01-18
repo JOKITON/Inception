@@ -19,6 +19,10 @@
  */
 
 // ** Database settings - You can get this info from your web host ** //
+
+define('WP_HOME','https://localhost');
+define('WP_SITEURL','https://localhost');
+
 /** The name of the database for WordPress */
 define( 'DB_NAME', 'database_name_here' );
 

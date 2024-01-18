@@ -8,15 +8,16 @@ RUN apk update && \
     apk fix && \
     apk add nginx
 
+# In case I want to restart any service
+# RUN apk add openrc --no-cache
+
 RUN mkdir -p /etc/nginx/conf.d \
-    /usr/share/nginx/html \
-    /etc/nginx/snippets
+    /usr/share/nginx/html
 
 #! Copy your SSL/TLS certificate and key into the container
 COPY nginx.crt /etc/nginx/nginx.crt
 COPY nginx.key /etc/nginx/nginx.key
 COPY my_own_config.conf /etc/nginx/nginx.conf
-COPY snippets/fastcgi-php.conf /etc/nginx/snippets/
 
 #! Update NGINX configuration to enable SSL/TLS
 # include my own configuration inside the default configuration file
