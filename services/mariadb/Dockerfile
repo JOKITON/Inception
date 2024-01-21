@@ -2,15 +2,22 @@
 FROM alpine:3.19
 
 # Install PHP-FPM and additional dependencies
-RUN apk update && \
-    apk upgrade && \
-    apk fix && \
-    apk add --no-cache mariadb mariadb-client  && \
-    mysql_install_db --user=mysql --ldata=/var/lib/mysql --rpm
+RUN apk update && apk upgrade --no-cache && \
+  rm -rf /var/cache/apk/* && \
+  apk add openrc mariadb mariadb-client --no-cache && \
+  openrc && \
+  mkdir -p /run/openrc && touch /run/openrc/softlevel && \
+  /etc/init.d/mariadb setup && \
+  rc-service mariadb start
+
+
 
 # Expose the default MariaDB port
 EXPOSE 3306
 
+COPY config/my.cnf etc/
+COPY config/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
+COPY config/init.sql /docker-entrypoint-initdb.d/
+
 # CMD intruction to start MariaDB
-CMD ["sleep", "infinity"]
-#CMD ["mysqld", "--user=mysql", "--console"]
+CMD ["/usr/bin/mysqld", "--user=mysql"]

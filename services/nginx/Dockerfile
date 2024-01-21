@@ -5,7 +5,7 @@ FROM alpine:3.19
 # Cache is cleaned to make container smaller
 RUN apk update && \
     apk upgrade && \
-    apk fix && \
+    apk fix && \    
     apk add nginx
 
 # In case I want to restart any service

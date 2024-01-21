@@ -21,21 +21,21 @@ services:
     restart: always
     networks:
       - my-network
-    volumes:
-      - wordpress_data:/var/www/html
     depends_on: # Dependecy set to create database before.
       - mariadb
+    env_file:
+      - services/.env
 
   mariadb:
     image: mariadb
     build:
       context: ./services/mariadb
       dockerfile: Dockerfile
+    env_file:
+      - services/.env
     restart: always
     networks:
       - my-network
-    volumes:
-      - db_data:/var/lib/mysql
 
 volumes: # Dedicated to configure the volumes
   wordpress_data:

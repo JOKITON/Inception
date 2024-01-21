@@ -2,7 +2,7 @@ COMPOSE = docker-compose
 
 COMPOSE_FILE = docker-compose.yml
 
-RM = rm
+RM = rmi
 
 all: up
 
