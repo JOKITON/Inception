@@ -22,19 +22,17 @@
 
 define( 'WP_DEBUG', true );
 
+/** MySQL database name */
 define( 'DB_NAME', getenv('WORDPRESS_DB_NAME') );
-define( 'DB_USER', getenv('WORDPRESS_DB_USER') );
-define( 'DB_PASSWORD', getenv('WORDPRESS_DB_PASSWORD') );
-define( 'DB_HOST', getenv('WORDPRESS_DB_HOST') );
 
-$HOME = getenv('HOME');
-$PATH = getenv('PATH');
-$SHLVL = getenv('SHLVL');
-$DB_NAME = getenv('WORDPRESS_DB_NAME');
-echo "HOME is $HOME    ";
-echo "PATH is $PATH    ";
-echo "SHLVL is $SHLVL    ";
-echo "DB_NAME is $DB_NAME    ";
+/** MySQL database username */
+define( 'DB_USER', getenv('WORDPRESS_DB_USER') );
+
+/** MySQL database password */
+define( 'DB_PASSWORD', getenv('WORDPRESS_DB_PASSWORD') );
+
+/** MySQL hostname */
+define( 'DB_HOST', getenv('WORDPRESS_DB_HOST') );
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
@@ -84,7 +82,7 @@ $table_prefix = 'wp_';
  *
  * @link https://wordpress.org/documentation/article/debugging-in-wordpress/
  */
-define( 'WP_DEBUG', false );
+#define( 'WP_DEBUG', false );
 
 /* Add any custom values between this line and the "stop editing" line. */
 

@@ -21,10 +21,17 @@ RUN mkdir -p /var/www/localhost/htdocs/wordpress && \
 	ln -s /usr/share/webapps/wordpress/ /var/www/localhost/htdocs/wordpress && \
 	mkdir /usr/share/webapps/wordpress/portfolio
 
-RUN export WORDPRESS_DB_HOST=mariadb:3306
-RUN export WORDPRESS_DB_USER=jokiton
-RUN export WORDPRESS_DB_PASSWORD=pass123
-RUN export WORDPRESS_DB_NAME=my_database
+# Export environment variables
+ENV WORDPRESS_DB_HOST=mariadb:3306 \
+    WORDPRESS_DB_USER=jokiton \
+    WORDPRESS_DB_PASSWORD=pass123 \
+    WORDPRESS_DB_NAME=my_database
+
+RUN echo "WORDPRESS_DB_HOST: $WORDPRESS_DB_HOST" \
+    && echo "WORDPRESS_DB_USER: $WORDPRESS_DB_USER" \
+    && echo "WORDPRESS_DB_PASSWORD: $WORDPRESS_DB_PASSWORD" \
+    && echo "WORDPRESS_DB_NAME: $WORDPRESS_DB_NAME"
+
 # Create and copy wp-config.php
 COPY wp-config.php /usr/share/webapps/wordpress/
 COPY portfolio /usr/share/webapps/wordpress/portfolio

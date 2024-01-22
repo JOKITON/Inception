@@ -7,6 +7,8 @@ services:
     build:
       context: ./services/nginx/ # Dir for Dockerfile
       dockerfile: Dockerfile
+    env_file:
+      - services/.env
     ports: # Ports enabled for communication : 80, 443
       - "443:443"
     links:
