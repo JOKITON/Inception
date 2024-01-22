@@ -1,4 +1,4 @@
-mysql -e CREATE DATABASE IF NOT EXISTS my_database;
-mysql -e CREATE USER 'jokiton'@'%' IDENTIFIED BY 'pass123';
-mysql -e GRANT ALL PRIVILEGES ON my_database.* TO 'jokiton'@'%';
-mysql -e FLUSH PRIVILEGES;
+CREATE DATABASE IF NOT EXISTS my_database;
+CREATE USER 'jokiton'@'%' IDENTIFIED BY 'pass123';
+GRANT ALL PRIVILEGES ON my_database.* TO 'jokiton'@'%';
+FLUSH PRIVILEGES;

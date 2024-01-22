@@ -9,12 +9,16 @@ services:
       dockerfile: Dockerfile
     ports: # Ports enabled for communication : 80, 443
       - "443:443"
+    links:
+      - wordpress
     restart: always # Your containers have to restart in case of a crash
     networks: # Enable communication between containers
       - my-network
 
   wordpress:
     image: wordpress
+    env_file:
+      - services/.env
     build:
       context: ./services/wordpress
       dockerfile: Dockerfile
@@ -23,8 +27,6 @@ services:
       - my-network
     depends_on: # Dependecy set to create database before.
       - mariadb
-    env_file:
-      - services/.env
 
   mariadb:
     image: mariadb
@@ -36,6 +38,8 @@ services:
     restart: always
     networks:
       - my-network
+    ports: # Ports enabled for communication : 80, 443
+      - "3306:3306"
 
 volumes: # Dedicated to configure the volumes
   wordpress_data:

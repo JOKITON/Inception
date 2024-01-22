@@ -15,9 +15,9 @@ RUN apk update && apk upgrade --no-cache && \
 # Expose the default MariaDB port
 EXPOSE 3306
 
+COPY config/init.sql /docker-entrypoint-initdb.d/
 COPY config/my.cnf etc/
 COPY config/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
-COPY config/init.sql /docker-entrypoint-initdb.d/
 
 # CMD intruction to start MariaDB
 CMD ["/usr/bin/mysqld", "--user=mysql"]
