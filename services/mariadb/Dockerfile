@@ -15,7 +15,10 @@ RUN apk update && apk upgrade --no-cache && \
 # Expose the default MariaDB port
 EXPOSE 3306
 
+RUN mkdir /docker-entrypoint-initdb.d
+RUN chmod -R 775 /docker-entrypoint-initdb.d
 COPY config/init.sql /docker-entrypoint-initdb.d/
+RUN chmod -R 775 /docker-entrypoint-initdb.d/init.sql
 COPY config/my.cnf etc/
 COPY config/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
 

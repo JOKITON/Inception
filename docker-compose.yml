@@ -3,18 +3,18 @@ name: inception
 
 services:
   nginx:
-    image: nginx # Name for the image
+    image: nginx
     build:
-      context: ./services/nginx/ # Dir for Dockerfile
+      context: ./services/nginx/
       dockerfile: Dockerfile
     env_file:
       - services/.env
-    ports: # Ports enabled for communication : 80, 443
+    ports:
       - "443:443"
     links:
       - wordpress
-    restart: always # Your containers have to restart in case of a crash
-    networks: # Enable communication between containers
+    restart: always
+    networks:
       - my-network
 
   wordpress:
@@ -27,8 +27,10 @@ services:
     restart: always
     networks:
       - my-network
-    depends_on: # Dependecy set to create database before.
+    depends_on:
       - mariadb
+    volumes:
+      - wordpress_data:/var/www/html
 
   mariadb:
     image: mariadb
@@ -40,16 +42,16 @@ services:
     restart: always
     networks:
       - my-network
-    ports: # Ports enabled for communication : 80, 443
+    ports:
       - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
 
-volumes: # Dedicated to configure the volumes
+volumes:
   wordpress_data:
   db_data:
     driver: local
-    external: false
-    name: mariadb-volume
 
 networks:
   my-network:
-    driver: bridge # Default network. Creates a virtual network in the host, connecting containers through a virtual "bridge".
+    driver: bridge

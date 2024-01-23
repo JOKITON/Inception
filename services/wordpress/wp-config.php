@@ -21,6 +21,7 @@
 // ** Database settings - You can get this info from your web host ** //
 
 define( 'WP_DEBUG', true );
+phpinfo(INFO_ENVIRONMENT);
 
 /** MySQL database name */
 define( 'DB_NAME', getenv('WORDPRESS_DB_NAME') );
