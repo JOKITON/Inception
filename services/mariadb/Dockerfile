@@ -6,21 +6,18 @@ RUN apk update && apk upgrade --no-cache && \
   rm -rf /var/cache/apk/* && \
   apk add openrc mariadb mariadb-client --no-cache && \
   openrc && \
-  mkdir -p /run/openrc && touch /run/openrc/softlevel && \
-  /etc/init.d/mariadb setup && \
-  rc-service mariadb start
+  mkdir -p /run/openrc && touch /run/openrc/softlevel
 
+# Copy configuration files
+COPY config/my.cnf etc/
+COPY config/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
 
+# Copy initialization script
+COPY config/init.sh /docker-entrypoint-initdb.d/
+RUN chmod +x /docker-entrypoint-initdb.d/init.sh
 
 # Expose the default MariaDB port
 EXPOSE 3306
 
-RUN mkdir /docker-entrypoint-initdb.d
-RUN chmod -R 775 /docker-entrypoint-initdb.d
-COPY config/init.sql /docker-entrypoint-initdb.d/
-RUN chmod -R 775 /docker-entrypoint-initdb.d/init.sql
-COPY config/my.cnf etc/
-COPY config/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
-
-# CMD intruction to start MariaDB
-CMD ["/usr/bin/mysqld", "--user=mysql"]
+# CMD instruction to start MariaDB
+CMD [ "mysqld", "--user=mysql"]
