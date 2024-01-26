@@ -15,6 +15,8 @@ up : $(COMPOSE_FILE)
 down : $(COMPOSE_FILE)
 	sudo $(COMPOSE) -f $(COMPOSE_FILE) down
 	sudo docker image $(RM) nginx wordpress mariadb
+	sudo docker volume rm inception_db_data
+	sudo docker volume rm inception_wordpress_data
 
 ps : $(COMPOSE_FILE)
 	sudo $(COMPOSE) -f $(COMPOSE_FILE) ps
