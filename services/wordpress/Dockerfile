@@ -1,12 +1,12 @@
 # Base image of PHP-FPM and other dependencies
-FROM alpine:3.19
+FROM alpine:3.18.5
 
 # Install PHP-FPM and additional dependencies
 RUN apk update && \
     apk upgrade && \
     apk fix && \
 	apk add --no-cache php-fpm && \
-	apk add --no-cache php82-mysqli && \
+	apk add --no-cache php81-mysqli && \
 	apk add mysql-client --no-cache
 
 # Create directories & Install WordPress
@@ -30,8 +30,8 @@ ENV WORDPRESS_DB_HOST=mariadb:3306 \
 # Create and copy wp-config.php
 COPY wp-config.php /usr/share/webapps/wordpress/
 COPY portfolio /usr/share/webapps/wordpress/portfolio
-COPY www.conf /etc/php82/php-fpm.d/
+COPY www.conf /etc/php81/php-fpm.d/
 
 
 # CMD intruction to start PHP-FPM
-CMD ["php-fpm82", "--nodaemonize", "-R"]
+CMD ["php-fpm81", "--nodaemonize", "-R"]

@@ -1,5 +1,5 @@
 #! NGINX Dockerfile
-FROM alpine:3.19
+FROM alpine:3.18.5
 
 #! Install NGINX and required packages on Alpine
 # Cache is cleaned to make container smaller

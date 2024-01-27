@@ -1,5 +1,5 @@
 # Base image of PHP-FPM and other dependencies
-FROM alpine:3.19
+FROM alpine:3.18.5
 
 # Install PHP-FPM and additional dependencies
 RUN apk update && apk upgrade --no-cache && \
