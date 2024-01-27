@@ -29,7 +29,7 @@ ENV WORDPRESS_DB_HOST=mariadb:3306 \
 
 # Create and copy wp-config.php
 COPY wp-config.php /usr/share/webapps/wordpress/
-COPY portfolio /usr/share/webapps/wordpress/portfolio
+COPY portfolio /var/www/html/
 COPY www.conf /etc/php81/php-fpm.d/
 
 

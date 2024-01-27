@@ -20,6 +20,8 @@
 
 // ** Database settings - You can get this info from your web host ** //
 
+define( 'SCRIPT_DEBUG', true );
+
 define( 'WP_DEBUG', true );
 #phpinfo(INFO_ENVIRONMENT);
 
@@ -40,6 +42,9 @@ define( 'DB_CHARSET', 'utf8' );
 
 /** The database collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );
+
+define('WP_SITEURL', 'https://localhost');
+define('WP_HOME', 'https://localhost');
 
 /**#@+
  * Authentication unique keys and salts.
