@@ -5,24 +5,24 @@ services:
   nginx:
     image: nginx
     build:
-      context: ./services/nginx/
+      context: ./srcs/nginx/
       dockerfile: Dockerfile
     env_file:
-      - services/.env
+      - srcs/.env
     ports:
       - "443:443"
-    links:
-      - wordpress
     restart: always
     networks:
       - my-network
+    depends_on:
+      - wordpress
 
   wordpress:
     image: wordpress
     env_file:
-      - services/.env
+      - srcs/.env
     build:
-      context: ./services/wordpress
+      context: ./srcs/wordpress
       dockerfile: Dockerfile
     restart: always
     networks:
@@ -35,13 +35,15 @@ services:
   mariadb:
     image: mariadb
     build:
-      context: ./services/mariadb
+      context: ./srcs/mariadb
       dockerfile: Dockerfile
     env_file:
-      - services/.env
+      - srcs/.env
     restart: always
     networks:
       - my-network
+    ports:
+      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
 
