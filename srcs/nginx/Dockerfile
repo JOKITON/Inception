@@ -15,7 +15,7 @@ RUN mkdir -p /etc/nginx/conf.d \
     /usr/share/nginx/html
 
 #! Copy your SSL/TLS certificate and key into the container
-COPY openssl.conf /etc/
+COPY conf/openssl.conf /etc/
 RUN openssl req -newkey rsa:4096 \
         -x509 \
         -sha256 \
@@ -25,7 +25,7 @@ RUN openssl req -newkey rsa:4096 \
         -keyout /etc/nginx/nginx.key \
          -config /etc/openssl.conf
 
-COPY my_own_config.conf /etc/nginx/nginx.conf
+COPY conf/my_own_config.conf /etc/nginx/nginx.conf
 
 #! They are just informative, they do NOT publish any ports
 # HTPP

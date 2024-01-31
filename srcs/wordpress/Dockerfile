@@ -20,9 +20,12 @@ RUN wget -O /tmp/wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-
     mv /tmp/wp-cli.phar /usr/local/bin/wp
 
 # Copy wp-config.php and other files
-COPY wp-config.php /var/www/html/wordpress/wp-config.php
+COPY conf/wp-config.php /var/www/html/wordpress/wp-config.php
 COPY portfolio /var/www/html/wordpress/portfolio
-COPY www.conf /etc/php81/php-fpm.d/www.conf
+COPY conf/www.conf /etc/php81/php-fpm.d/www.conf
+
+COPY conf/scripts/init.sh .
+RUN chmod 777 init.sh
 
 # Set ownership
 RUN chown -R jokiton:nobody /var/www/html/wordpress
@@ -50,7 +53,6 @@ USER jokiton
 #CMD ["dockerize", "-wait", "tcp://mariadb:3306", "-timeout", "60s", "wp", "core", "install", "--path=/var/www/html/wordpress", "--url=https://localhost", "--title=localhost", "--admin_name=$WORDPRESS_DB_USER", "--admin_password=$WORDPRESS_DB_PASSWORD", "--admin_email=example@gmail.com", "--allow-root"]
 
 # CMD instruction to start PHP-FPM
-CMD ["php-fpm81", "--nodaemonize"]
-
+#CMD ["php-fpm81", "--nodaemonize"]
 #CMD [ "wp", "core", "install", "--path=/var/www/html/wordpress", "--url=https://localhost", "--title="WordpressInstallation"", "--admin_name="$WORDPRESS_DB_USER"", "--admin_password="$WORDPRESS_DB_PASSWORD"", "--admin_email=example@gmail.com" ]
-#wp core install --path=/var/www/html/wordpress --url=https://localhost --title="WordpressInstallation" --admin_name="$WORDPRESS_DB_USER" --admin_password="$WORDPRESS_DB_PASSWORD" --admin_email=example@gmail.com
+CMD ["sh", "init.sh"]
