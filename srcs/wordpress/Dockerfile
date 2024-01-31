@@ -9,10 +9,11 @@ RUN apk update && \
 
 # Add a new user
 RUN adduser -D -u 1000 -g 'www-data' jokiton
+RUN adduser -p pass123 -G jokiton www-data
 
 # Create directories & Install WordPress in a directory where the user has write access
 RUN mkdir -p /var/www/html/wordpress && \
-    chown -R jokiton:nobody /var/www/html/wordpress
+    chown -R jokiton:www-data /var/www/html/wordpress
 
 # Install wp-cli
 RUN wget -O /tmp/wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
@@ -28,7 +29,7 @@ COPY conf/scripts/init.sh .
 RUN chmod 777 init.sh
 
 # Set ownership
-RUN chown -R jokiton:nobody /var/www/html/wordpress
+RUN chown -R jokiton:www-data /var/www/html/wordpress
     
 #RUN wp core download
 RUN wp core download --path=/var/www/html/wordpress --allow-root
@@ -42,7 +43,7 @@ RUN chmod 655 /var/www/html/wordpress/wp-config.php
 
 # Create necessary directories for PHP-FPM log
 RUN mkdir -p /var/log/php81 && \
-    chown -R jokiton:nobody /var/log/php81
+    chown -R jokiton:www-data /var/log/php81
 
 # Switch to the nobody user for PHP-FPM
 USER jokiton
