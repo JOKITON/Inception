@@ -2,11 +2,11 @@ COMPOSE = sudo docker-compose -f
 
 COMPOSE_FILE = docker-compose.yml
 
-VOL_DOCKER = sudo docker volume
-IMG_DOCKER = sudo docker image
+VOL_DOCKER = docker volume
+IMG_DOCKER = docker image
 IMGS = nginx wordpress mariadb
-VOL_MARIADB = inception_db_data
-VOL_WORDPRESS = inception_wordpress_data
+VOL_MARIADB = wordpress_database
+VOL_WORDPRESS = wordpress_webpage
 
 RM = rm
 RMI = rmi

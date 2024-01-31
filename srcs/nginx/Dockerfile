@@ -6,7 +6,7 @@ FROM alpine:3.18.5
 RUN apk update && \
     apk upgrade && \
     apk fix && \    
-    apk add nginx
+    apk add nginx openssl curl
 
 # In case I want to restart any service
 # RUN apk add openrc --no-cache
@@ -15,13 +15,17 @@ RUN mkdir -p /etc/nginx/conf.d \
     /usr/share/nginx/html
 
 #! Copy your SSL/TLS certificate and key into the container
-COPY nginx.crt /etc/nginx/nginx.crt
-COPY nginx.key /etc/nginx/nginx.key
-COPY my_own_config.conf /etc/nginx/nginx.conf
+COPY openssl.conf /etc/
+RUN openssl req -newkey rsa:4096 \
+        -x509 \
+        -sha256 \
+        -days 3650 \
+        -nodes \
+        -out /etc/nginx/nginx.crt \
+        -keyout /etc/nginx/nginx.key \
+         -config /etc/openssl.conf
 
-#! Update NGINX configuration to enable SSL/TLS
-# include my own configuration inside the default configuration file
-RUN sed -i '    /http {/r /etc/nginx/conf.d/my_own_config.conf' /etc/nginx/nginx.conf
+COPY my_own_config.conf /etc/nginx/nginx.conf
 
 #! They are just informative, they do NOT publish any ports
 # HTPP
@@ -34,3 +38,4 @@ EXPOSE 443
 # -g :  pass a global configuration directive -> (daemon off)
 # daemon off : not to run in the background as a daemon process ( prevents nginx from closing inside the container )
 CMD ["nginx", "-g", "daemon off;"]
+#CMD ["sleep", "infinity"]

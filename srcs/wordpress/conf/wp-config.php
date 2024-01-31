@@ -20,9 +20,8 @@
 
 // ** Database settings - You can get this info from your web host ** //
 
-define( 'SCRIPT_DEBUG', true );
-
-define( 'WP_DEBUG', true );
+#define('WP_DEBUG', true);
+#define('WP_DEBUG_LOG', true);
 #phpinfo(INFO_ENVIRONMENT);
 
 /** MySQL database name */
@@ -41,7 +40,7 @@ define( 'DB_HOST', getenv('WORDPRESS_DB_HOST') );
 define( 'DB_CHARSET', 'utf8' );
 
 /** The database collate type. Don't change this if in doubt. */
-define( 'DB_COLLATE', '' );
+define('DB_COLLATE', 'utf8_general_ci');
 
 define('WP_SITEURL', 'https://localhost');
 define('WP_HOME', 'https://localhost');
@@ -88,7 +87,6 @@ $table_prefix = 'wp_';
  *
  * @link https://wordpress.org/documentation/article/debugging-in-wordpress/
  */
-#define( 'WP_DEBUG', false );
 
 /* Add any custom values between this line and the "stop editing" line. */
 

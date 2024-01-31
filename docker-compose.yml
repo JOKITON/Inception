@@ -21,17 +21,16 @@ services:
     image: wordpress
     env_file:
       - srcs/.env
+    depends_on:
+      - mariadb
     build:
       context: ./srcs/wordpress
       dockerfile: Dockerfile
     restart: always
     networks:
       - my-network
-    depends_on:
-      - mariadb
     volumes:
       - wordpress_data:/var/www/html
-
   mariadb:
     image: mariadb
     build:
@@ -42,14 +41,14 @@ services:
     restart: always
     networks:
       - my-network
-    ports:
-      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
 
 volumes:
   wordpress_data:
+    name: wordpress_webpage
   db_data:
+    name: wordpress_database
     driver: local
 
 networks:
