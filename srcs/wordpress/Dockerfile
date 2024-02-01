@@ -7,13 +7,12 @@ RUN apk update && \
     apk add --no-cache php-fpm php81 php81-cgi php81-mysqli mysql-client fcgi php81-phar wget php81-mbstring php81-iconv && \
     rm -rf /var/cache/apk/*
 
-# Add a new user
-RUN adduser -D -u 1000 -g 'www-data' jokiton
-RUN adduser -p pass123 -G jokiton www-data
+RUN adduser --disabled-password jokiton
+RUN adduser jokiton www-data
 
 # Create directories & Install WordPress in a directory where the user has write access
-RUN mkdir -p /var/www/html/wordpress && \
-    chown -R jokiton:www-data /var/www/html/wordpress
+RUN mkdir -p /var/www/localhost/htdocs/wordpress
+RUN mkdir -p /usr/share/webapps/
 
 # Install wp-cli
 RUN wget -O /tmp/wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
@@ -21,39 +20,29 @@ RUN wget -O /tmp/wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-
     mv /tmp/wp-cli.phar /usr/local/bin/wp
 
 # Copy wp-config.php and other files
-COPY conf/wp-config.php /var/www/html/wordpress/wp-config.php
-COPY portfolio /var/www/html/wordpress/portfolio
+COPY conf/wp-config.php /usr/share/webapps/wp-config.php
+COPY portfolio /usr/share/webapps/portfolio
 COPY conf/www.conf /etc/php81/php-fpm.d/www.conf
 
-COPY conf/scripts/init.sh .
-RUN chmod 777 init.sh
+COPY conf/scripts/init.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # Set ownership
-RUN chown -R jokiton:www-data /var/www/html/wordpress
-    
-#RUN wp core download
-RUN wp core download --path=/var/www/html/wordpress --allow-root
+RUN wp core download --path=/usr/share/webapps/ --allow-root
+RUN rm /usr/share/webapps/wp-config-sample.php
+RUN chmod 655 /usr/share/webapps/wp-config.php
 
 # Useless file since I create a copy of wp-config.php
 #RUN wp core config --path=/var/www/html/wordpress --dbhost="$WORDPRESS_DB_HOST" --dbname="$WORDPRESS_DB_NAME" --dbuser="$WORDPRESS_DB_USER" --dbpass="$WORDPRESS_DB_PASSWORD" --allow-root
 
-RUN chmod 655 /var/www/html/wordpress/wp-config.php
-
-#RUN wp core install --path=/var/www/html/wordpress --url=https://localhost --title="WordpressInstallation" --admin_name="$WORDPRESS_DB_USER" --admin_password="$WORDPRESS_DB_PASSWORD" --admin_email=example@gmail.com
-
 # Create necessary directories for PHP-FPM log
-RUN mkdir -p /var/log/php81 && \
-    chown -R jokiton:www-data /var/log/php81
+RUN mkdir -p /var/log/php81
+
+# Change permissions to directories
+RUN chown -R jokiton:www-data /var/log/php81
+RUN chown -R jokiton:www-data /usr/share/webapps
+
+CMD [ "/entrypoint.sh" ]
 
 # Switch to the nobody user for PHP-FPM
-USER jokiton
-
-# CMD instruction to start PHP-FPM
-#CMD ["php-fpm81", "--nodaemonize"]
-#CMD ["sleep", "infinity"]
-#CMD ["dockerize", "-wait", "tcp://mariadb:3306", "-timeout", "60s", "wp", "core", "install", "--path=/var/www/html/wordpress", "--url=https://localhost", "--title=localhost", "--admin_name=$WORDPRESS_DB_USER", "--admin_password=$WORDPRESS_DB_PASSWORD", "--admin_email=example@gmail.com", "--allow-root"]
-
-# CMD instruction to start PHP-FPM
-#CMD ["php-fpm81", "--nodaemonize"]
-#CMD [ "wp", "core", "install", "--path=/var/www/html/wordpress", "--url=https://localhost", "--title="WordpressInstallation"", "--admin_name="$WORDPRESS_DB_USER"", "--admin_password="$WORDPRESS_DB_PASSWORD"", "--admin_email=example@gmail.com" ]
-CMD ["sh", "init.sh"]
+#USER www-data

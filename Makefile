@@ -1,4 +1,4 @@
-COMPOSE = docker compose -f
+COMPOSE = sudo docker-compose -f
 
 COMPOSE_FILE = docker-compose.yml
 
