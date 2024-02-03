@@ -20,4 +20,4 @@ chown -R jokiton:www-data /usr/share/webapps
 
 su jokiton
 
-php-fpm81 -F
+php8.2

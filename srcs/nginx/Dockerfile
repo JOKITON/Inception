@@ -1,15 +1,16 @@
 #! NGINX Dockerfile
-FROM alpine:3.18.5
+FROM debian:bookworm
 
-#! Install NGINX and required packages on Alpine
+#! Install NGINX and required packages on Debian
 # Cache is cleaned to make container smaller
-RUN apk update && \
-    apk upgrade && \
-    apk fix && \    
-    apk add nginx openssl curl
+RUN apt update && \
+    apt upgrade && \
+    apt full-upgrade && \
+    apt autoremove && \ 
+    apt install -y curl nginx openssl procps
 
 # In case I want to restart any service
-# RUN apk add openrc --no-cache
+# RUN apt install openrc --no-cache
 
 RUN mkdir -p /etc/nginx/conf.d \
     /usr/share/nginx/html

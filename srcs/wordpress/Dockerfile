@@ -1,13 +1,15 @@
 # Base image of PHP-FPM and other dependencies
-FROM alpine:3.18.5
+FROM debian:bookworm
 
 # Install PHP-FPM and additional dependencies
-RUN apk update && \
-    apk upgrade && \
-    apk add --no-cache php-fpm php81 php81-cgi php81-mysqli mysql-client fcgi php81-phar wget php81-mbstring php81-iconv && \
-    rm -rf /var/cache/apk/*
+RUN apt update && \
+    apt upgrade && \
+    apt install -y wget php php-cli php-common php-imap php-redis php-snmp php-xml php-mysqli php-zip php-mbstring php-curl libapache2-mod-php && \
+    rm -rf /var/cache/apt/* && \
+    apt full-upgrade && \
+    apt autoremove
 
-RUN adduser --disabled-password jokiton
+RUN adduser --disabled-password --gecos "" jokiton
 RUN adduser jokiton www-data
 
 # Create directories & Install WordPress in a directory where the user has write access
@@ -29,6 +31,7 @@ RUN chmod +x /entrypoint.sh
 
 # Set ownership
 RUN wp core download --path=/usr/share/webapps/ --allow-root
+
 RUN rm /usr/share/webapps/wp-config-sample.php
 RUN chmod 655 /usr/share/webapps/wp-config.php
 
@@ -41,6 +44,8 @@ RUN mkdir -p /var/log/php81
 # Change permissions to directories
 RUN chown -R jokiton:www-data /var/log/php81
 RUN chown -R jokiton:www-data /usr/share/webapps
+
+USER jokiton
 
 CMD [ "/entrypoint.sh" ]
 
