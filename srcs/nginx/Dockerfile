@@ -1,12 +1,12 @@
 #! NGINX Dockerfile
-FROM alpine:3.18.5
+FROM alpine:3.18.6
 
 #! Install NGINX and required packages on Alpine
 # Cache is cleaned to make container smaller
 RUN apk update && \
     apk upgrade && \
     apk fix && \    
-    apk add nginx openssl curl
+    apk add nginx openssl curl net-tools
 
 # In case I want to restart any service
 # RUN apk add openrc --no-cache

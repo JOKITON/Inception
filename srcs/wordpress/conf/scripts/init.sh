@@ -1,23 +1,36 @@
 #!/bin/sh
 
-# Wait for MariaDB to be ready
-sleep 0.1
+# Set ownership
+wp core download --path=/usr/share/webapps/wordpress --allow-root
+rm /usr/share/webapps/wordpress/wp-config-sample.php
+#RUN chmod 655 /usr/share/webapps/wordpress/wp-config.php
 
-wp core install --path=/usr/share/webapps --url=https://localhost --title="jaizpuru.42intra.fr" --admin_name="$WORDPRESS_DB_USER" --admin_password="$WORDPRESS_DB_PASSWORD" --admin_email=example@gmail.com
+# Useless file since I create a copy of wp-config.php
+#RUN wp core config --path=/usr/share/webapps --dbhost="$WORDPRESS_DB_HOST" --dbname="$WORDPRESS_DB_NAME" --dbuser="$WORDPRESS_DB_USER" --dbpass="$WORDPRESS_DB_PASSWORD" --allow-root
 
-wp plugin install --path=/usr/share/webapps redis-cache --activate --allow-root
-wp theme install --path=/usr/share/webapps astra --activate --allow-root
+# Create necessary directories for PHP-FPM log
+mkdir -p /var/log/php81
 
-wp theme status --path=/usr/share/webapps --allow-root
-wp theme activate astra --path=/usr/share/webapps --allow-root
-wp plugin activate redis-cache --path=/usr/share/webapps --allow-root
+# Change permissions to directories
+chown -R jokiton:www-data /var/log/php81
+chown -R jokiton:www-data /usr/share/webapps/wordpress
+chmod -R 755 /usr/share/webapps/wordpress
 
-wp rewrite --path=/usr/share/webapps structure '/%postname%/'
-wp rewrite --path=/usr/share/webapps list
-wp rewrite --path=/usr/share/webapps flush
+wp core install --path=/usr/share/webapps/wordpress --url=https://localhost --title="jaizpuru.42intra.fr" --admin_name="$WORDPRESS_DB_USER" --admin_password="$WORDPRESS_DB_PASSWORD" --admin_email=example@gmail.com
+wp core update --path=/usr/share/webapps/wordpress --allow-root
 
-chown -R jokiton:www-data /usr/share/webapps
+wp plugin install --path=/usr/share/webapps/wordpress redis-cache --activate --allow-root
+wp theme install --path=/usr/share/webapps/wordpress astra --activate --allow-root
+
+wp theme status --path=/usr/share/webapps/wordpress --allow-root
+wp theme activate astra --path=/usr/share/webapps/wordpress --allow-root
+wp plugin activate redis-cache --path=/usr/share/webapps/wordpress --allow-root
+
+wp rewrite structure '/%postname%/' --path=/usr/share/webapps/wordpress --allow-root
+wp rewrite flush --path=/usr/share/webapps/wordpress --allow-root
+
+chown -R jokiton:www-data /usr/share/webapps/wordpress
 
 su jokiton
 
-php-fpm81 -F
+php-fpm81 -R -F

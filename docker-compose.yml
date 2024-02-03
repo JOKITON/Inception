@@ -16,7 +16,6 @@ services:
       - my-network
     depends_on:
       - wordpress
-
   wordpress:
     image: wordpress
     env_file:
@@ -30,7 +29,7 @@ services:
     networks:
       - my-network
     volumes:
-      - wordpress_data:/var/www/html
+      - wordpress_data:/usr/share/webapps
   mariadb:
     image: mariadb
     build:
