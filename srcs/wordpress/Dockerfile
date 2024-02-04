@@ -24,30 +24,30 @@ RUN wget -O /tmp/wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-
 
 # Copy wp-config.php and other files
 COPY conf/wp-config.php /usr/share/webapps/wp-config.php
+RUN chmod 600 /usr/share/webapps/wp-config.php
 COPY portfolio /usr/share/webapps/portfolio
-COPY conf/php-fpm.conf /etc/php81/php-fpm.d/php-fpm.conf
+COPY conf/php-fpm.conf /etc/php/8.2/fpm/php-fpm.conf
 COPY conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 
-COPY conf/scripts/init.sh /entrypoint.sh
+COPY conf/scripts/wp-cli.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+RUN chown -R jokiton:www-data /etc/php/8.2/fpm/
+
 # Set ownership
-RUN chmod 655 /usr/share/webapps/wp-config.php
 RUN wp core download --path=/usr/share/webapps/ --allow-root
 COPY conf/wp-config.php /usr/share/webapps/wp-config.php
-
-RUN rm /usr/share/webapps/wp-config-sample.php
-RUN chmod 655 /usr/share/webapps/wp-config.php
+RUN chmod 600 /usr/share/webapps/wp-config.php
 
 # Useless file since I create a copy of wp-config.php
 #RUN wp core config --path=/var/www/html/wordpress --dbhost="$WORDPRESS_DB_HOST" --dbname="$WORDPRESS_DB_NAME" --dbuser="$WORDPRESS_DB_USER" --dbpass="$WORDPRESS_DB_PASSWORD" --allow-root
 
 # Create necessary directories for PHP-FPM log
-RUN mkdir -p /var/log/php81
+RUN mkdir -p /var/log/php/8.2/fpm
 RUN mkdir -p /var/log/wp
 
 # Change permissions to directories
-RUN chown -R jokiton:www-data /var/log/php81
+RUN chown -R jokiton:www-data /var/log/php
 RUN chown -R jokiton:www-data /usr/share/webapps
 
 RUN touch /var/log/wp/installation_error.log
