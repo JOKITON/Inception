@@ -25,6 +25,9 @@ down : $(COMPOSE_FILE)
 	$(VOL_DOCKER) $(RM) $(VOL_WORDPRESS)
 	$(VOL_DOCKER) $(RM) $(VOL_MARIADB)
 
+restart:
+	$(COMPOSE) $(COMPOSE_FILE) restart
+
 ps : $(COMPOSE_FILE)
 	$(COMPOSE) $(COMPOSE_FILE) ps
 

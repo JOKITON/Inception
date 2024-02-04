@@ -21,6 +21,7 @@
 #
 [client-server]
 # Port or socket location where to connect
+bind-address = 0.0.0.0
 port = 3306
 socket = /run/mysqld/mysqld.sock
 

@@ -20,21 +20,25 @@
 
 // ** Database settings - You can get this info from your web host ** //
 
-#define('WP_DEBUG', true);
-#define('WP_DEBUG_LOG', true);
+define('WP_DEBUG', true);
+define('WP_DEBUG_LOG', true);
 #phpinfo(INFO_ENVIRONMENT);
 
 /** MySQL database name */
-define( 'DB_NAME', getenv('WORDPRESS_DB_NAME') );
+define( 'DB_NAME', 'my_database' );
+#define( 'DB_NAME', getenv('WORDPRESS_DB_NAME') );
 
 /** MySQL database username */
-define( 'DB_USER', getenv('WORDPRESS_DB_USER') );
+define( 'DB_USER', 'jokiton' );
+#define( 'DB_USER', getenv('WORDPRESS_DB_USER') );
 
 /** MySQL database password */
-define( 'DB_PASSWORD', getenv('WORDPRESS_DB_PASSWORD') );
+define( 'DB_PASSWORD', 'pass123' );
+#define( 'DB_PASSWORD', getenv('WORDPRESS_DB_PASSWORD') );
 
 /** MySQL hostname */
-define( 'DB_HOST', getenv('WORDPRESS_DB_HOST') );
+define( 'DB_HOST', 'mariadb' );
+#define( 'DB_HOST', getenv('WORDPRESS_DB_HOST') );
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
