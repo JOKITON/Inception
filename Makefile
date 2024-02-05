@@ -1,6 +1,6 @@
 COMPOSE = sudo docker-compose -f
 
-COMPOSE_FILE = docker-compose.yml
+COMPOSE_FILE = srcs/docker-compose.yml
 
 VOL_DOCKER = docker volume
 IMG_DOCKER = docker image
