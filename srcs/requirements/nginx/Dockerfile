@@ -6,10 +6,13 @@ FROM alpine:3.18.6
 RUN apk update && \
     apk upgrade && \
     apk fix && \    
-    apk add nginx openssl curl net-tools
+    apk add --no-cache openssl curl net-tools wget && \
+    rm -rf /var/cache/apk/*
 
-# In case I want to restart any service
-# RUN apk add openrc --no-cache
+RUN apk update && apk add --no-cache nginx
+
+# Remove default Nginx configuration
+RUN rm /etc/nginx/nginx.conf
 
 RUN mkdir -p /etc/nginx/conf.d \
     /usr/share/nginx/html

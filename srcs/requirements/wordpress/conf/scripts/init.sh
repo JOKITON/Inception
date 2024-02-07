@@ -6,7 +6,7 @@ rm /usr/share/webapps/wordpress/wp-config-sample.php
 #RUN chmod 655 /usr/share/webapps/wordpress/wp-config.php
 
 # Useless file since I create a copy of wp-config.php
-#RUN wp core config --path=/usr/share/webapps --dbhost="$WORDPRESS_DB_HOST" --dbname="$WORDPRESS_DB_NAME" --dbuser="$WORDPRESS_DB_USER" --dbpass="$WORDPRESS_DB_PASSWORD" --allow-root
+#wp core config --path=/usr/share/webapps/wordpress --dbhost="$WORDPRESS_DB_HOST" --dbname="$WORDPRESS_DB_NAME" --dbuser="$WORDPRESS_DB_USER" --dbpass="$WORDPRESS_DB_PASSWORD" --allow-root
 
 # Create necessary directories for PHP-FPM log
 mkdir -p /var/log/php81
