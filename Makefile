@@ -1,10 +1,10 @@
-COMPOSE = docker compose -f
+COMPOSE = sudo docker compose -f
 
 COMPOSE_FILE = srcs/docker-compose.yml
 
 VOL_DOCKER = docker volume
 IMG_DOCKER = docker image
-IMGS = nginx wordpress mariadb
+IMGS = inception-nginx inception-wordpress inception-mariadb
 VOL_MARIADB = wordpress_database
 VOL_WORDPRESS = wordpress_webpage
 
@@ -15,7 +15,8 @@ all: up
 
 # Build and start containers
 up : $(COMPOSE_FILE)
-	$(COMPOSE) $(COMPOSE_FILE) up -d
+	$(COMPOSE) $(COMPOSE_FILE) --env-file srcs/.env/ build
+	$(COMPOSE) $(COMPOSE_FILE) --env-file srcs/.env/ up
 	echo "Available rules inside Makefile:\n\t1 : up\n\t2 : down\n\t3 : ps"
 
 #Stop and remove containers (does not remove images)
