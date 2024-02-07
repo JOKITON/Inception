@@ -3,7 +3,7 @@
 # Wait for MariaDB to be ready
 # sleep 0.1
 
-wp core install --path=/usr/share/webapps --url=https://localhost --title="jaizpuru.42intra.fr" --admin_name="$WORDPRESS_DB_USER" --admin_password="$WORDPRESS_DB_PASSWORD" --admin_email=jokinaizpuru28@gmail.com --allow-root
+wp core install --path=/usr/share/webapps --url=https://jaizpuru.42.fr --title="jaizpuru.42intra.fr" --admin_name="$WORDPRESS_DB_USER" --admin_password="$WORDPRESS_DB_PASSWORD" --admin_email=jokinaizpuru28@gmail.com --allow-root
 
 wp plugin install --path=/usr/share/webapps redis-cache --activate --allow-root 
 wp theme install --path=/usr/share/webapps astra --activate --allow-root 

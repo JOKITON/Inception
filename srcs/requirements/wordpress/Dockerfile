@@ -14,7 +14,7 @@ RUN usermod -aG sudo jokiton
 RUN adduser jokiton www-data
 
 # Create directories & Install WordPress in a directory where the user has write access
-RUN mkdir -p /var/www/localhost/htdocs/wordpress
+RUN mkdir -p /var/www/jaizpuru.42.fr/htdocs/wordpress
 RUN mkdir -p /usr/share/webapps/
 
 # Install wp-cli
