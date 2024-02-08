@@ -19,6 +19,10 @@ RUN mkdir -p /etc/nginx/conf.d \
 
 #! Copy your SSL/TLS certificate and key into the container
 COPY conf/openssl.conf /etc/
+# Testing ...
+#COPY conf/nginx.key /etc/nginx/nginx.key
+#COPY conf/nginx.crt /etc/nginx/nginx.crt
+
 RUN openssl req -newkey rsa:4096 \
         -x509 \
         -sha256 \
@@ -26,7 +30,7 @@ RUN openssl req -newkey rsa:4096 \
         -nodes \
         -out /etc/nginx/nginx.crt \
         -keyout /etc/nginx/nginx.key \
-         -config /etc/openssl.conf
+        -config /etc/openssl.conf
 
 COPY conf/my_own_config.conf /etc/nginx/nginx.conf
 

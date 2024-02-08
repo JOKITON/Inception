@@ -16,8 +16,8 @@ all: up
 # Build and start containers
 up : $(COMPOSE_FILE)
 	echo "Add this line to /etc/hosts : "localhost	jaizpuru.42.fr" \n"
-	$(COMPOSE) $(COMPOSE_FILE) --env-file srcs/.env/ build
-	$(COMPOSE) $(COMPOSE_FILE) --env-file srcs/.env/ up
+	$(COMPOSE) $(COMPOSE_FILE) --env-file srcs/.env build
+	$(COMPOSE) $(COMPOSE_FILE) --env-file srcs/.env up
 	echo "Available rules inside Makefile:\n\t1 : up\n\t2 : down\n\t3 : ps"
 
 #Stop and remove containers (does not remove images)

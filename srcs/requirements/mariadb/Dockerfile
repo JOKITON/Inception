@@ -13,8 +13,13 @@ RUN apk update && apk upgrade --no-cache && \
 COPY config/my.cnf etc/my.cnf
 COPY config/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
 
+ENV MYSQL_PASSWORD=pass123
+ENV MYSQL_ROOT_PASSWORD=pass123
+
 # Copy initialization script
-COPY config/scripts/init.sql /docker-entrypoint-initdb.d/
+COPY config/scripts/init.sh /docker-entrypoint-initdb.d/
+RUN chmod +x /docker-entrypoint-initdb.d/init.sh
+RUN sh /docker-entrypoint-initdb.d/init.sh
 RUN chmod +x /docker-entrypoint-initdb.d/init.sql
 
 # Expose the default MariaDB port

@@ -32,11 +32,11 @@ services:
       - wordpress_data:/usr/share/webapps
   mariadb:
     container_name: mariadb
+    env_file:
+      - .env
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
-    env_file:
-      - .env
     restart: always
     networks:
       - my-network
