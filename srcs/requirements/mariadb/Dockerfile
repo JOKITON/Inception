@@ -28,6 +28,9 @@ EXPOSE 3306
 RUN mkdir -p /var/log/mariadb
 RUN mysql_install_db --user=mysql --ldata=/var/lib/mysql >> /var/log/mariadb/mariadb_install.log
 
+# In case my.cnf is needed to check
+#COPY config/my.cnf etc/my.cnf
+
 # CMD instruction to start MariaDB
 CMD [ "mysqld", "--user=mysql", "--datadir=/var/lib/mysql", "--init-file=/docker-entrypoint-initdb.d/init.sql"]
 #CMD ["sleep", "infinity"]
