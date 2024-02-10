@@ -1,8 +1,18 @@
 #!/bin/sh
 
+while true
+do
+ nc -w100 -z mariadb 3306
+ if [ $? -eq 0 ]
+ then
+  echo "MariaDB is ready!"
+  break
+ fi
+  sleep 1
+done
+
 # Set ownership
 wp core download --path=/usr/share/webapps/wordpress --allow-root
-rm /usr/share/webapps/wordpress/wp-config-sample.php
 #RUN chmod 655 /usr/share/webapps/wordpress/wp-config.php
 
 # Useless file since I create a copy of wp-config.php
@@ -34,3 +44,4 @@ chown -R jokiton:www-data /usr/share/webapps/wordpress
 su jokiton
 
 php-fpm81 -R -F
+

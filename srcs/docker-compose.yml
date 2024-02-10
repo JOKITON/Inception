@@ -29,7 +29,7 @@ services:
     networks:
       - my-network
     volumes:
-      - wordpress_data:/usr/share/webapps
+      - wordpress_data:/usr/share/webapps/wordpress
   mariadb:
     container_name: mariadb
     env_file:
