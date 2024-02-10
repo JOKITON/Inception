@@ -46,10 +46,23 @@ services:
 volumes:
   wordpress_data:
     name: wordpress_webpage
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/jaizpuru/data/wordpress_webpage
   db_data:
     name: wordpress_database
     driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/jaizpuru/data/wordpress_database
 
 networks:
   my-network:
     driver: bridge
+    driver_opts:
+      type: none
+      device: ~/data
+      o: bind

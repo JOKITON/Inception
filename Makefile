@@ -2,6 +2,8 @@ COMPOSE = docker compose -f
 
 COMPOSE_FILE = srcs/docker-compose.yml
 
+VOL_DIR = /home/jaizpuru/data/
+
 VOL_DOCKER = docker volume
 IMG_DOCKER = docker image
 IMGS = inception-nginx inception-wordpress inception-mariadb
@@ -13,8 +15,12 @@ RMI = rmi
 
 all: up
 
+$(VOL_DIR) :
+	mkdir -p /home/jaizpuru/data/wordpress_data
+	mkdir -p /home/jaizpuru/data/wordpress_webpage
+
 # Build and start containers
-up : $(COMPOSE_FILE)
+up : $(VOL_DIR) $(COMPOSE_FILE)
 	echo "Add this line to /etc/hosts : "localhost	jaizpuru.42.fr" \n"
 	$(COMPOSE) $(COMPOSE_FILE) --env-file srcs/.env build
 	$(COMPOSE) $(COMPOSE_FILE) --env-file srcs/.env up
