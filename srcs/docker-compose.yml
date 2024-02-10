@@ -1,44 +1,42 @@
-version: '3'
+version: '3.8'
 name: inception
 
 services:
   nginx:
-    image: nginx
+    container_name: nginx
     build:
-      context: ./services/nginx/
+      context: ./requirements/nginx/
       dockerfile: Dockerfile
     env_file:
-      - services/.env
+      - .env
     ports:
       - "443:443"
-    links:
-      - wordpress
-    restart: always
-    networks:
-      - my-network
-
-  wordpress:
-    image: wordpress
-    env_file:
-      - services/.env
-    build:
-      context: ./services/wordpress
-      dockerfile: Dockerfile
     restart: always
     networks:
       - my-network
     depends_on:
-      - mariadb
-    volumes:
-      - wordpress_data:/var/www/html
-
-  mariadb:
-    image: mariadb
-    build:
-      context: ./services/mariadb
-      dockerfile: Dockerfile
+      - wordpress
+  wordpress:
+    container_name: wordpress
     env_file:
-      - services/.env
+      - .env
+    depends_on:
+      - mariadb
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - my-network
+    volumes:
+      - wordpress_data:/usr/share/webapps
+  mariadb:
+    container_name: mariadb
+    env_file:
+      - .env
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
     restart: always
     networks:
       - my-network
@@ -47,7 +45,9 @@ services:
 
 volumes:
   wordpress_data:
+    name: wordpress_webpage
   db_data:
+    name: wordpress_database
     driver: local
 
 networks:

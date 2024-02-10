@@ -20,7 +20,9 @@
 
 // ** Database settings - You can get this info from your web host ** //
 
-define( 'WP_DEBUG', true );
+define('WP_DEBUG', true);
+define('WP_DEBUG_LOG', true);
+define('WP_DEBUG_DISPLAY', false);
 #phpinfo(INFO_ENVIRONMENT);
 
 /** MySQL database name */

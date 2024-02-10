@@ -1,5 +1,2 @@
-volumes/
-nginx.crt
-nginx.key
-.env
-services/wordpress/portfolio
+#srcs/.env
+#srcs/requirements/wordpress/portfolio

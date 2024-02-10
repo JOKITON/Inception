@@ -1,0 +1,6 @@
+CREATE DATABASE IF NOT EXISTS my_database;
+ALTER USER 'root'@'localhost' IDENTIFIED BY '{$MYSQL_ROOT_PASSWORD}';
+CREATE USER 'jokiton'@'%' IDENTIFIED BY '{$MYSQL_PASSWORD}';
+GRANT ALL PRIVILEGES ON my_database.* TO 'jokiton'@'%';
+DROP USER ''@'localhost';
+FLUSH PRIVILEGES;

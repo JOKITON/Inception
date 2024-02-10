@@ -1,4 +1,0 @@
-CREATE DATABASE IF NOT EXISTS my_database;
-CREATE USER 'jokiton'@'%' IDENTIFIED BY 'pass123';
-GRANT ALL PRIVILEGES ON my_database.* TO 'jokiton'@'%';
-FLUSH PRIVILEGES;
