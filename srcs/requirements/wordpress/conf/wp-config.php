@@ -24,6 +24,9 @@ define('WP_DEBUG', true);
 define('WP_DEBUG_LOG', true);
 define('WP_DEBUG_DISPLAY', false);
 
+define('WP_CACHE', true);
+define('WP_CACHE_KEY_SALT', 'jaizpuru.42.fr');
+
 /** MySQL database name */
 define( 'DB_NAME', getenv('WORDPRESS_DB_NAME') );
 
