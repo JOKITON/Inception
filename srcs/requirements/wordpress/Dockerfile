@@ -1,4 +1,4 @@
-# Base image of PHP-FPM and other dependencies
+# Base image of Alpine
 FROM alpine:3.18.6
 
 # Install PHP-FPM and additional dependencies

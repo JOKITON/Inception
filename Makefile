@@ -1,12 +1,14 @@
 COMPOSE = docker compose
+VOL_DOCKER = docker volume
+IMG_DOCKER = docker image
 
 COMPOSE_FILE = -f srcs/docker-compose.yml
 
-VOL_DOCKER = docker volume
-IMG_DOCKER = docker image
-IMGS = inception-nginx inception-wordpress inception-mariadb
+IMGS = inception-nginx inception-wordpress inception-mariadb inception-ftp
 VOL_MARIADB = wordpress_database
 VOL_WORDPRESS = wordpress_webpage
+VOL_WORDPRESS_DATABASE = /home/jaizpuru/data/wordpress_database
+VOL_WORDPRESS_WEBPAGE = /home/jaizpuru/data/wordpress_webpage
 
 RM = rm
 RMI = rmi
@@ -14,15 +16,19 @@ RMI = rmi
 all: up
 
 # Build and start containers
-up :
-	sudo mkdir -p /home/jaizpuru/data/wordpress_database
-	sudo mkdir -p /home/jaizpuru/data/wordpress_webpage
+up : $(VOL_WORDPRESS_DATABASE) $(VOL_WORDPRESS_WEBPAGE)
 	echo "Add this line to /etc/hosts : "localhost	jaizpuru.42.fr" \n"
 	$(COMPOSE) --env-file srcs/.env $(COMPOSE_FILE) build
 	$(COMPOSE) --env-file srcs/.env $(COMPOSE_FILE) up
 	echo "Available rules inside Makefile:\n\t1 : up\n\t2 : down\n\t3 : ps"
 
-#Stop and remove containers (does not remove images)
+$(VOL_WORDPRESS_DATABASE) :
+	sudo mkdir -p /home/jaizpuru/data/wordpress_database
+
+$(VOL_WORDPRESS_WEBPAGE) :
+	sudo mkdir -p /home/jaizpuru/data/wordpress_webpage
+
+#Stop and remove containers, associated images, volumes & network
 down :
 	$(COMPOSE) $(COMPOSE_FILE) down
 	sudo $(RM) -rf /home/jaizpuru/data
@@ -33,14 +39,29 @@ down :
 restart:
 	$(COMPOSE) $(COMPOSE_FILE) restart
 
-ps : $(COMPOSE_FILE)
+# Lists the containers created with docker compose, docker & volumes
+ps :
 	$(COMPOSE) $(COMPOSE_FILE) ps
+	$(IMG_DOCKER) ls
+	$(VOL_DOCKER) ls
 
 # View container logs
-logs : $(COMPOSE_FILE)
+logs :
 	$(COMPOSE) $(COMPOSE_FILE) logs -f
 
 # Build Docker images for services (for ex. NGINX)
-build-nginx : $(COMPOSE_FILE)
+build-nginx :
 	$(COMPOSE) $(COMPOSE_FILE) build nginx
+	$(COMPOSE) $(COMPOSE_FILE) up nginx
 
+build-mariadb :
+	$(COMPOSE) $(COMPOSE_FILE) build mariadb
+	$(COMPOSE) $(COMPOSE_FILE) up mariadb
+
+build-wordpress :
+	$(COMPOSE) $(COMPOSE_FILE) build wordpress
+	$(COMPOSE) $(COMPOSE_FILE) up wordpress
+
+build-bonus :
+	$(COMPOSE) $(COMPOSE_FILE) build ftp
+	$(COMPOSE) $(COMPOSE_FILE) up ftp

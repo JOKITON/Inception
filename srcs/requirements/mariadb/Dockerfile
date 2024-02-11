@@ -1,7 +1,7 @@
-# Base image of PHP-FPM and other dependencies
+# Base image of Alpine
 FROM alpine:3.18.6
 
-# Install PHP-FPM and additional dependencies
+# Install MariaDB (mySQL) and additional dependencies
 RUN apk update && apk upgrade --no-cache && \
   rm -rf /var/cache/apk/* && \
   apk add openrc mariadb mariadb-client --no-cache
