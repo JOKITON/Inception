@@ -25,6 +25,7 @@ up :
 #Stop and remove containers (does not remove images)
 down :
 	$(COMPOSE) $(COMPOSE_FILE) down
+	sudo $(RM) -rf /home/jaizpuru/data
 	$(IMG_DOCKER) $(RMI) $(IMGS)
 	$(VOL_DOCKER) $(RM) $(VOL_WORDPRESS)
 	$(VOL_DOCKER) $(RM) $(VOL_MARIADB)
