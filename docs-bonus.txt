@@ -1,0 +1,17 @@
+
+- Redis cache is set up along with Wordpress inside the 'init.sh' script file.
+
+- FTP:
+/* In order to get OpenRC working without the additional volume... */
+https://github.com/gliderlabs/docker-alpine/issues/437#issuecomment-494200575
+
+/* In order to know how to set the server & client side with FTP */
+https://wiki.alpinelinux.org/wiki/FTP
+
+- Simple static website:
+ Added a downloaded page from the Internet about boxing, have not read it yet.
+
+- Set up Adminer:
+	No idea about Adminer, what it is for or how...
+
+- Set up a service of my choice...

@@ -8,6 +8,7 @@ RUN apk update && apk upgrade --no-cache && \
 
 RUN rc-update
 
+# Added to give openrc a volume to work with
 VOLUME [ “/sys/fs/cgroup” ]
 
 # CMD instruction to start FTP
