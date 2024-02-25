@@ -12,4 +12,13 @@ cd Inception
 
 # Install docker compose
 sudo apt install -y apt-transport-https ca-certificates curl gnupg
-sudo apt install -y docker docker-compose docker-doc docker-registry docker.io
+sudo apt install -y docker docker-doc docker-registry
+
+sudo curl  -L"https://github.com/docker/compose/releases/download/v2.24.6/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
+
+sudo chmod +x /usr/local/bin/docker-compose
+
+docker-compose --version
+
+sudo apt install -y docker.io
+
