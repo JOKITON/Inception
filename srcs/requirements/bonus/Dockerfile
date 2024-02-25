@@ -13,4 +13,6 @@ VOLUME [ “/sys/fs/cgroup” ]
 
 # CMD instruction to start FTP
 #CMD ["sh", "entrypoint.sh"]
+
+# Testing... ( not indended to be using sleep )
 CMD ["sleep", "infinity"]
