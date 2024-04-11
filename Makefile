@@ -1,4 +1,4 @@
-COMPOSE = docker compose
+COMPOSE = docker-compose
 VOL_DOCKER = docker volume
 IMG_DOCKER = docker image
 
