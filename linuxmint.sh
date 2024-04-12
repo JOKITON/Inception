@@ -18,10 +18,10 @@ sudo apt install -y docker docker-doc docker-registry
 sudo curl  -L "https://github.com/docker/compose/releases/download/v2.26.1/docker-compose-linux-x86_64" -o /usr/local/bin/docker\ compose
 
 # Make docker compose executable, give it right permissions
-sudo chmod +x /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker\ compose
 
 # Check docker compose version
-docker-compose --version
+docker\ compose --version
 
 sudo apt install -y docker.io
 
