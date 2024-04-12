@@ -5,7 +5,7 @@ IMG_DOCKER = docker image
 FILE = srcs/docker-compose.yml
 COMPOSE_FILE = -f srcs/docker-compose.yml
 
-IMGS = inception-nginx inception-wordpress inception-mariadb inception-ftp
+IMGS = inception-nginx inception-wordpress inception-mariadb
 VOL_MARIADB = wordpress_database
 VOL_WORDPRESS = wordpress_webpage
 VOL_WORDPRESS_DATABASE = /home/jaizpuru/data/wordpress_database
@@ -62,7 +62,3 @@ build-mariadb : $(FILE)
 build-wordpress : $(FILE)
 	$(COMPOSE) $(COMPOSE_FILE) build wordpress
 	$(COMPOSE) $(COMPOSE_FILE) up wordpress
-
-build-bonus : $(FILE)
-	$(COMPOSE) $(COMPOSE_FILE) build ftp
-	$(COMPOSE) $(COMPOSE_FILE) up ftp
