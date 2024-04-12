@@ -1,6 +1,6 @@
 volumes/
 .vscode
-.env
-srcs/requirements/wordpress/portfolio
+srcs/.env
+#srcs/requirements/wordpress/portfolio
 srcs/requirements/bonus
 srcs/requirements/tools
