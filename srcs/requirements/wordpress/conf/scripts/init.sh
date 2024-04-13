@@ -26,7 +26,7 @@ chown -R jokiton:www-data /var/log/php81
 chown -R jokiton:www-data /usr/share/webapps/wordpress
 chmod -R 755 /usr/share/webapps/wordpress
 
-wp core install --path=/usr/share/webapps/wordpress --url=https://jaizpuru.42.fr --title="jaizpuru.42intra.fr" --admin_name="$WORDPRESS_DB_USER" --admin_password="$WORDPRESS_DB_PASSWORD" --admin_email=example@gmail.com
+wp core install --path=/usr/share/webapps/wordpress --url=https://jaizpuru.42.fr --title="jaizpuru.42.fr" --admin_name="$WORDPRESS_DB_USER" --admin_password="$WORDPRESS_DB_PASSWORD" --admin_email=example@gmail.com
 wp core update --path=/usr/share/webapps/wordpress --allow-root
 
 wp plugin install --path=/usr/share/webapps/wordpress redis-cache --activate --allow-root
@@ -43,5 +43,5 @@ chown -R jokiton:www-data /usr/share/webapps/wordpress
 
 su jokiton
 
-php-fpm81 -R -F
+php-fpm81 -F -R
 
