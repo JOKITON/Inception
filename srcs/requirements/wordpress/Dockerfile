@@ -13,7 +13,7 @@ RUN adduser jokiton www-data
 # Create directories & Install WordPress in a directory where the user has write access
 RUN mkdir -p /var/www/
 RUN mkdir -p /usr/share/webapps/wordpress
-RUN ln -s /usr/share/webapps/wordpress/ /var/www/wordpress
+RUN ln -s /usr/share/webapps/wordpress/ /var/www/html
 
 # Install wp-cli
 RUN wget -O /tmp/wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
