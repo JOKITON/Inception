@@ -4,22 +4,24 @@ name: inception
 services:
   nginx:
     container_name: nginx
-    build:
+    build: # Defines the path for the Dockerfile & other files
       context: ./requirements/nginx/
       dockerfile: Dockerfile
-    env_file:
+    env_file: # Enviroment variables given to the container
       - .env
-    ports:
+    ports: # Ports accessible outside the container
       - "443:443"
-    restart: always
-    networks:
+    restart: always # Will restart if any error is encountered
+    networks: # Will be part of a network ( to be able to exchange data with Wordpress )
       - my-network
-    depends_on:
+    depends_on: # The container will start after Wordpress container is up
       - wordpress
   wordpress:
     container_name: wordpress
     env_file:
       - .env
+    ports:
+      - "9000:9000"
     depends_on:
       - mariadb
     build:
@@ -28,8 +30,8 @@ services:
     restart: always
     networks:
       - my-network
-    volumes:
-      - wordpress_data:/usr/share/webapps/wordpress
+    volumes: # Defines what volume it will use & the path to be linked with in the container
+      - wordpress_data:/var/www/wordpress
   mariadb:
     container_name: mariadb
     env_file:
@@ -44,14 +46,14 @@ services:
       - db_data:/var/lib/mysql
 
 volumes:
-  wordpress_data:
+  wordpress_data: # Stores Wordpress & Static website files
     name: wordpress_webpage
     driver: local
     driver_opts:
       type: none
       o: bind
       device: /home/jaizpuru/data/wordpress_webpage
-  db_data:
+  db_data: # Stores the linked database with Wordpress
     name: wordpress_database
     driver: local
     driver_opts:

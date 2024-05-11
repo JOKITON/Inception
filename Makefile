@@ -1,6 +1,7 @@
-COMPOSE = docker-compose
+COMPOSE = docker compose
 VOL_DOCKER = docker volume
 IMG_DOCKER = docker image
+NET_DOCKER = docker network
 
 FILE = srcs/docker-compose.yml
 COMPOSE_FILE = -f srcs/docker-compose.yml
@@ -10,17 +11,19 @@ VOL_MARIADB = wordpress_database
 VOL_WORDPRESS = wordpress_webpage
 VOL_WORDPRESS_DATABASE = /home/jaizpuru/data/wordpress_database
 VOL_WORDPRESS_WEBPAGE = /home/jaizpuru/data/wordpress_webpage
+ENV = srcs/.env
 
 RM = rm
 RMI = rmi
+PRUNE = prune
 
 all: up
 
 # Build and start containers
-up : $(VOL_WORDPRESS_DATABASE) $(VOL_WORDPRESS_WEBPAGE) $(FILE)
+up : $(VOL_WORDPRESS_DATABASE) $(VOL_WORDPRESS_WEBPAGE) $(FILE) $(ENV)
 	echo "Add this line to /etc/hosts : "localhost	jaizpuru.42.fr" \n"
-	$(COMPOSE) --env-file srcs/.env $(COMPOSE_FILE) build
-	$(COMPOSE) --env-file srcs/.env $(COMPOSE_FILE) up
+	$(COMPOSE) --env-file $(ENV) $(COMPOSE_FILE) build
+	$(COMPOSE) --env-file $(ENV) $(COMPOSE_FILE) up
 	echo "Available rules inside Makefile:\n\t1 : up\n\t2 : down\n\t3 : ps"
 
 $(VOL_WORDPRESS_DATABASE) : $(FILE)
@@ -36,6 +39,7 @@ down : $(FILE)
 	$(IMG_DOCKER) $(RMI) $(IMGS)
 	$(VOL_DOCKER) $(RM) $(VOL_WORDPRESS)
 	$(VOL_DOCKER) $(RM) $(VOL_MARIADB)
+	$(NET_DOCKER) $(PRUNE) -f
 
 restart: $(FILE)
 	$(COMPOSE) $(COMPOSE_FILE) restart
