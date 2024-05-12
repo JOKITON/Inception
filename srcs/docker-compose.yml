@@ -1,4 +1,3 @@
-version: '3.8'
 name: inception
 
 services:
@@ -14,14 +13,14 @@ services:
     restart: always # Will restart if any error is encountered
     networks: # Will be part of a network ( to be able to exchange data with Wordpress )
       - my-network
+    volumes:
+      - wordpress_data:/var/www/html
     depends_on: # The container will start after Wordpress container is up
       - wordpress
   wordpress:
     container_name: wordpress
     env_file:
       - .env
-    ports:
-      - "9000:9000"
     depends_on:
       - mariadb
     build:
@@ -31,7 +30,7 @@ services:
     networks:
       - my-network
     volumes: # Defines what volume it will use & the path to be linked with in the container
-      - wordpress_data:/var/www/wordpress
+      - wordpress_data:/var/www/html
   mariadb:
     container_name: mariadb
     env_file:
