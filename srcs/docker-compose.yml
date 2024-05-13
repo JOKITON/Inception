@@ -1,3 +1,5 @@
+# The images created from this configuration file will have this prefix, for ex.: 'inception-nginx', 'inception-wordpress'
+# If no name is given, it will just use the directory where its located. 'srcs-...'
 name: inception
 
 services:
@@ -23,6 +25,7 @@ services:
       - .env
     depends_on:
       - mariadb
+      - redis
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
@@ -43,6 +46,14 @@ services:
       - my-network
     volumes:
       - db_data:/var/lib/mysql
+  redis:
+    container_name: bonus-redis
+    build:
+      context: ./requirements/bonus/redis
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - my-network
 
 volumes:
   wordpress_data: # Stores Wordpress & Static website files
@@ -51,6 +62,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
+      # Copies the data inside the container back to the host
       device: /home/jaizpuru/data/wordpress_webpage
   db_data: # Stores the linked database with Wordpress
     name: wordpress_database

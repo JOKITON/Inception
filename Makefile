@@ -6,7 +6,7 @@ NET_DOCKER = docker network
 FILE = srcs/docker-compose.yml
 COMPOSE_FILE = -f srcs/docker-compose.yml
 
-IMGS = inception-nginx inception-wordpress inception-mariadb
+IMGS = inception-nginx inception-wordpress inception-mariadb inception-redis
 VOL_MARIADB = wordpress_database
 VOL_WORDPRESS = wordpress_webpage
 VOL_WORDPRESS_DATABASE = /home/jaizpuru/data/wordpress_database
