@@ -51,6 +51,8 @@ services:
     build:
       context: ./requirements/bonus/redis
       dockerfile: Dockerfile
+    volumes: # Defines what volume it will use & the path to be linked with in the container
+      - wordpress_data:/var/www/html
     restart: always
     networks:
       - my-network

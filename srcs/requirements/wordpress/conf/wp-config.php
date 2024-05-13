@@ -29,24 +29,28 @@ define('WP_CACHE_KEY_SALT', 'jaizpuru.42.fr');
 
 /** MySQL database name */
 define( 'DB_NAME', getenv('WORDPRESS_DB_NAME') );
-
 /** MySQL database username */
 define( 'DB_USER', getenv('WORDPRESS_DB_USER') );
-
 /** MySQL database password */
 define( 'DB_PASSWORD', getenv('WORDPRESS_DB_PASSWORD') );
-
 /** MySQL hostname */
 define( 'DB_HOST', getenv('WORDPRESS_DB_HOST') );
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
-
 /** The database collate type. Don't change this if in doubt. */
 define('DB_COLLATE', 'utf8_general_ci');
 
+/** Redis */
 define('WP_REDIS_HOST', 'redis');
 define('WP_REDIS_PORT', '6379');
+// change the prefix and database for each site to avoid cache data collisions
+define( 'WP_REDIS_PREFIX', 'my-moms-site' );
+define( 'WP_REDIS_DATABASE', 0 ); // 0-15
+// reasonable connection and read+write timeouts
+define( 'WP_REDIS_TIMEOUT', 1 );
+define( 'WP_REDIS_READ_TIMEOUT', 1 );
+
 
 /**#@+
  * Authentication unique keys and salts.

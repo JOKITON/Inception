@@ -36,7 +36,7 @@ $(VOL_WORDPRESS_WEBPAGE) : $(FILE)
 down : $(FILE)
 	$(COMPOSE) $(COMPOSE_FILE) down
 	sudo $(RM) -rf /home/jaizpuru/data
-	$(IMG_DOCKER) $(RMI) $(IMGS)
+	$(IMG_DOCKER) $(RMI) $(IMGS) -f
 	$(VOL_DOCKER) $(RM) $(VOL_WORDPRESS)
 	$(VOL_DOCKER) $(RM) $(VOL_MARIADB)
 	$(NET_DOCKER) $(PRUNE) -f
