@@ -4,7 +4,7 @@ FROM alpine:3.18.6
 # Install PHP-FPM and additional dependencies
 RUN apk update && \
     apk upgrade && \
-    apk add --no-cache php-fpm php81 php81-cgi php81-mysqli mysql-client fcgi php81-phar wget php81-mbstring php81-iconv php81-redis && \
+    apk add --no-cache php81-fpm php81 php81-mysqli php81-phar wget php81-mbstring php81-iconv && \
     rm -rf /var/cache/apk/*
 
 # Adds a user & joins 'www-data' group
