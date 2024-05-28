@@ -23,7 +23,8 @@ wp core download --path=/var/www/html --allow-root
 # wp core config --path=/var/www/html --dbhost="$WORDPRESS_DB_HOST" --dbname="$WORDPRESS_DB_NAME" --dbuser="$MYSQL_USER" --dbpass="$MYSQL_PASSWORD" --allow-root
 
 wp core install --path=/var/www/html --url="$WP_SITEURL" --title="$WP_HOME" --admin_name="$WP_ADMIN_USR" --admin_password="$WP_ADMIN_PWD" --admin_email=$WP_ADMIN_EMAIL
-wp user create $WP_USR $WP_EMAIL --role=author --user_pass=$WP_PWD --allow-root
+wp user create $WP_USR $WP_EMAIL --role=administrator --user_pass=$WP_PWD --allow-root
+wp user create $WP_USR2 $WP_EMAIL2 --role=contributor --user_pass=$WP_PWD2 --allow-root
 wp core update --path=/var/www/html --allow-root
 
 # Change permissions to directories

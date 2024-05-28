@@ -25,7 +25,6 @@ services:
       - .env
     depends_on:
       - mariadb
-      - redis
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
@@ -46,16 +45,6 @@ services:
       - my-network
     volumes:
       - db_data:/var/lib/mysql
-  redis:
-    container_name: bonus-redis
-    build:
-      context: ./requirements/bonus/redis
-      dockerfile: Dockerfile
-    volumes: # Defines what volume it will use & the path to be linked with in the container
-      - wordpress_data:/var/www/html
-    restart: always
-    networks:
-      - my-network
 
 volumes:
   wordpress_data: # Stores Wordpress & Static website files
